@@ -6,17 +6,15 @@ import java.awt.*;
 
 public abstract class Ship {
 
-    private Animator animator;
-    private int x;
-    private int y;
-    private int attackValue;
-    private boolean collided;
-    private Rectangle boundingBox;
+    protected Animator animator;
+    protected int attackValue;
+    protected boolean collided;
+    protected Rectangle boundingBox;
+    protected int x;
+    protected int y;
 
     public Ship(){
         animator = new Animator();
-        x = 0;
-        y = 0;
         attackValue = 0;
         collided = false;
         boundingBox = new Rectangle();
@@ -31,7 +29,27 @@ public abstract class Ship {
         this.boundingBox = boundingBox;
     }
 
-    public int getX() {return x;}
+    public void create(){
+        animator.create();
+    }
 
-    public int getY() {return y;}
+    public void render(){
+        animator.render(x, y);
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public Animator getAnimator() {
+        return animator;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

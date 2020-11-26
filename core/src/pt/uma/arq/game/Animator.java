@@ -20,6 +20,13 @@ public class Animator {
     // A variable for tracking elapsed time for the animation
     float stateTime;
 
+    public Animator(){
+        this.spriteBatch = new SpriteBatch();
+        this.FRAME_COLS = 0;
+        this.FRAME_ROWS = 0;
+        this.path = "";
+    }
+
     public Animator(SpriteBatch batch, String path, int columns, int rows) {
         this.spriteBatch = batch;
         this.FRAME_COLS = columns;
@@ -61,6 +68,7 @@ public class Animator {
     public void render(int posX, int posY) {
         stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
         // Get current frame of animation for the current stateTime
+
         TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
         spriteBatch.draw(currentFrame, posX, posY); // Draw current frame at (50, 50)
     }
@@ -76,5 +84,13 @@ public class Animator {
 
     public int getWidth() {
         return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
