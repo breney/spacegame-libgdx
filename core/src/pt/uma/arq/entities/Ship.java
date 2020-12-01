@@ -13,7 +13,7 @@ public abstract class Ship {
     protected int x;
     protected int y;
 
-    public Ship(){
+    public Ship() {
         animator = new Animator();
         attackValue = 0;
         collided = false;
@@ -29,27 +29,27 @@ public abstract class Ship {
         this.boundingBox = boundingBox;
     }
 
-    public void create(){
+    public void create() {
         animator.create();
     }
 
-    public void render(){
+    public void render() {
         animator.render(x, y);
-    }
-
-    public void setX(int x) {
-        this.x = x;
     }
 
     public int getX() {
         return x;
     }
 
-    public Animator getAnimator() {
-        return animator;
-    }
-
     public int getY() {
         return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

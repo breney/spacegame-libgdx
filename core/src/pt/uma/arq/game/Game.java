@@ -11,6 +11,7 @@ import pt.uma.arq.entities.MediumShip;
 import pt.uma.arq.entities.PlayerShip;
 import pt.uma.arq.entities.SmallShip;
 import pt.uma.arq.game.Fleet;
+
 import java.awt.*;
 
 public class Game extends ApplicationAdapter {
@@ -23,12 +24,11 @@ public class Game extends ApplicationAdapter {
     private SmallShip smallEnemy;
     private MediumShip mediumEnemy;
     private LargeShip largeEnemy;
-    private Fleet enemyFleet;
+    private Fleet fleet;
 
     @Override
     public void create() {
         Gdx.graphics.setWindowedMode(600, 800);
-
 
 
         batch = new SpriteBatch();
@@ -37,19 +37,19 @@ public class Game extends ApplicationAdapter {
 
         backgroundManagement = new BackgroundManagement(batch);
 
-        smallEnemy = new SmallShip(batch, 200,650);
-        mediumEnemy = new MediumShip(batch ,200,600);
-        largeEnemy = new LargeShip(batch,200,700);
+        smallEnemy = new SmallShip(batch,100,700);
+        mediumEnemy = new MediumShip(batch,125,675);
+        largeEnemy = new LargeShip(batch,150,650);
+        fleet = new Fleet(batch);
 
         player = new PlayerShip(batch);
 
-        smallEnemy.create();
-        mediumEnemy.create();
-        largeEnemy.create();
-
-        enemyFleet.enemyFleet(smallEnemy,5);
-
         player.create();
+
+        fleet.setShips(smallEnemy);
+        fleet.setShips(mediumEnemy);
+        fleet.setShips(largeEnemy);
+
     }
 
     @Override
@@ -58,17 +58,19 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        player.handleInput();
+
 
         batch.begin();
         backgroundManagement.render();
 
-
         player.render();
+        player.handleInput();
+        fleet.createFleet(0,3);
+        fleet.createFleet(1,5);
+        fleet.createFleet(2,7);
 
         batch.end();
     }
-
 
 
     @Override
