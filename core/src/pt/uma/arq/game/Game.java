@@ -26,6 +26,7 @@ public class Game extends ApplicationAdapter {
     private LargeShip largeEnemy;
     private Fleet fleet;
 
+
     @Override
     public void create() {
         Gdx.graphics.setWindowedMode(600, 800);
@@ -37,19 +38,15 @@ public class Game extends ApplicationAdapter {
 
         backgroundManagement = new BackgroundManagement(batch);
 
-        smallEnemy = new SmallShip(batch,100,700);
-        mediumEnemy = new MediumShip(batch,125,675);
-        largeEnemy = new LargeShip(batch,150,650);
-        fleet = new Fleet(batch);
+
+        fleet = new Fleet();
 
         player = new PlayerShip(batch);
 
         player.create();
 
-        fleet.setShips(smallEnemy);
-        fleet.setShips(mediumEnemy);
-        fleet.setShips(largeEnemy);
-
+        fleet.fillShips();
+        fleet.createFleet();
     }
 
     @Override
@@ -58,18 +55,16 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
         batch.begin();
         backgroundManagement.render();
-
         player.render();
+        fleet.render();
         player.handleInput();
-        fleet.createFleet(0,3);
-        fleet.createFleet(1,5);
-        fleet.createFleet(2,7);
+        player.update();
+        LaserManagement.render();
 
         batch.end();
+
     }
 
 

@@ -37,6 +37,10 @@ public abstract class Ship {
         animator.render(x, y);
     }
 
+    public Animator getAnimator() {
+        return animator;
+    }
+
     public int getX() {
         return x;
     }

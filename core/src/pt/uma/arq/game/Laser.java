@@ -7,33 +7,36 @@ import java.awt.*;
 
 public class Laser {
 
-    private Animator laser;
+    private Animator animator;
     private int x;
     private int y;
-    private Animator player;
+    private int laserSpeed;
+    private int laserTimer;
+    private boolean removable;
 
     public Laser(SpriteBatch batch, int x, int y) {
-        this.laser = new Animator(batch, "laser-bolts.png", 2, 2);
+        this.animator = new Animator(batch, "laser-bolts.png", 2, 2);
         this.x = x;
         this.y = y;
+        this.laserSpeed = 20;
+        this.laserTimer = 1;
+        this.removable = false;
+        this.animator.create();
     }
 
-    public void create() {
-        laser.create();
+    public void render() {
+        y += laserSpeed;
+        animator.render(x,y);
     }
 
-    public void render(int x) {
-        laser.render(x, y);
-        this.x = x;
-    }
-
-    public void walk() {
-        int p = y;
-        while (p < 800) {
-            p += 1;
-            laser.render(x, p);
+    public boolean isRemovable(){
+        if(y >= 800){
+            removable = true;
         }
+        return  removable;
     }
+
+
 
 
 }
