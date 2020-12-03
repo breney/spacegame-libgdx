@@ -1,5 +1,6 @@
 package pt.uma.arq.game;
 
+import pt.uma.arq.entities.PlayerShip;
 import pt.uma.arq.entities.Ship;
 
 import java.util.ArrayList;
@@ -11,8 +12,9 @@ public class LaserManagement {
 
     private static ArrayList<Laser> laserArrayList = new ArrayList<>();
 
-    public static void add(Laser laser) {
-        laserArrayList.add(laser);
+    private static PlayerShip playerShip;
+
+    public static void add(Laser laser) {laserArrayList.add(laser);
     }
 
     public static void remove() {
@@ -24,8 +26,13 @@ public class LaserManagement {
             if (laser.isRemovable()) {
                 it.remove();
             }
-            if(laser.isColided(ship)){
+            if(laser.isPlayerLaser() == true && laser.isColidedEnemyShip(ship)){
                 it.remove();
+                playerShip.setScore(playerShip.getScore()+ 100);
+            }
+            if(laser.isPlayerLaser() == false && laser.isColidedPlayerShip(playerShip) ){
+                it.remove();
+
             }
         }
 
@@ -37,8 +44,12 @@ public class LaserManagement {
         }
     }
 
-    public static void updateShipPosition(ArrayList<Ship> ships) {
+    public static void updateEnemyShipPosition(ArrayList<Ship> ships) {
         ship = ships;
+    }
+
+    public static void updatePlayerShipPosition(PlayerShip ship) {
+        playerShip = ship;
     }
 
 }

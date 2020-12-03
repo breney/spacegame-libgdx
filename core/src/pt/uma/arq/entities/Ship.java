@@ -2,6 +2,7 @@ package pt.uma.arq.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import pt.uma.arq.game.Animator;
 
 import java.awt.*;
@@ -15,6 +16,7 @@ public abstract class Ship {
     protected int x;
     protected int y;
     protected Texture walkSheet;
+    protected String name;
 
     public Ship() {
         animator = new Animator();
@@ -24,14 +26,15 @@ public abstract class Ship {
         walkSheet = new Texture("");
     }
 
-    public Ship(Animator animator, int x, int y, int attackValue, boolean collided, Rectangle boundingBox) {
+    public Ship(Animator animator, int x, int y, int attackValue, boolean collided, String name) {
         this.animator = animator;
         this.x = x;
         this.y = y;
         this.attackValue = attackValue;
         this.collided = collided;
         this.walkSheet = new Texture(Gdx.files.internal(animator.getPath()));
-        this.boundingBox = new Rectangle(x,y,walkSheet.getWidth(),walkSheet.getHeight());
+        this.boundingBox = new Rectangle(x,y,walkSheet.getWidth() / 2,walkSheet.getHeight());
+        this.name = name;
     }
 
     public void create() {
@@ -40,8 +43,8 @@ public abstract class Ship {
 
     public void render() {
         animator.render(x, y);
+        boundingBox.setLocation(x,y);
     }
-
 
     public int getX() {
         return x;
@@ -49,12 +52,12 @@ public abstract class Ship {
 
     public int getY() {return y;}
 
-    public int getBoundingBoxWidth(){
-        return walkSheet.getWidth();
+    public Rectangle getBoundingBox(){
+        return boundingBox;
     }
 
-    public int getBoundingBoxHeight(){
-        return walkSheet.getHeight();
+    public String getName(){
+        return name;
     }
 
 }

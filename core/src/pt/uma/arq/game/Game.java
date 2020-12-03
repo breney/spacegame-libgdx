@@ -21,9 +21,6 @@ public class Game extends ApplicationAdapter {
     private BitmapFont font;
 
     private PlayerShip player;
-    private SmallShip smallEnemy;
-    private MediumShip mediumEnemy;
-    private LargeShip largeEnemy;
     private Fleet fleet;
 
 
@@ -38,7 +35,7 @@ public class Game extends ApplicationAdapter {
 
         backgroundManagement = new BackgroundManagement(batch);
 
-        fleet = new Fleet();
+        fleet = new Fleet(batch);
         player = new PlayerShip(batch);
         player.create();
 
@@ -54,19 +51,34 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        backgroundManagement.render();
 
-        player.render();
-        player.handleInput();
-        player.update();
-        fleet.render();
+        backgroundManagement.render();
+        font.draw(batch, "Score : " + player.getScore(), 20, 780);
+        font.draw(batch, "HP : " + player.getLife(), 480, 780);
+
+        if(player.getLife() >= 0){
+            player.render();
+            player.handleInput();
+            player.update();
+        }
+
+        if(fleet.getShips().size() != 0){
+            fleet.render();
+            fleet.shipsFire();
+            fleet.update();
+        }
+
 
         LaserManagement.render();
         LaserManagement.remove();
-        LaserManagement.updateShipPosition(fleet.getShips());
+        LaserManagement.updateEnemyShipPosition(fleet.getShips());
+        LaserManagement.updatePlayerShipPosition(player);
 
         if(fleet.getShips().size() == 0){
             font.draw(batch, "Player Wins", 220, 420);
+        }
+        if(player.getLife() <= 0){
+            font.draw(batch, "Enemy Crew Wins", 220, 420);
         }
 
         batch.end();
