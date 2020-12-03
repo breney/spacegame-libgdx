@@ -6,6 +6,7 @@ import pt.uma.arq.entities.Ship;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Laser {
 
@@ -30,28 +31,34 @@ public class Laser {
 
     public void render() {
         y += laserSpeed;
-        animator.render(x,y);
+        animator.render(x, y);
     }
 
-    public boolean isRemovable(){
-        if(y >= 800){
+    public boolean isRemovable() {
+        if (y >= 800) {
             removable = true;
         }
-        return  removable;
+        return removable;
     }
 
-    public boolean isColided(ArrayList<Ship> ships){
+    public boolean isColided(ArrayList<Ship> ships) {
 
-        Animator explosionAnimator = new Animator(batch, "explosion.png",1,1);
+        Animator explosionAnimator = new Animator(batch, "explosion.png", 1, 1);
 
-        for (int i = 0; i < ships.size(); i++) {
-                if(x == ships.get(i).getX() && y == ships.get(i).getY()){
-                    ships.remove(i);
+        Iterator<Ship> it = ships.iterator();
+
+        while (it.hasNext()) {
+            Ship ship = it.next();
+            if (x >= ship.getX() && x <= (ship.getX() + (ship.getBoundingBoxWidth()/2))) {
+                if (y >= ship.getY() && y <= (ship.getY() + ship.getBoundingBoxHeight())) {
+                    it.remove();
                     explosionAnimator.create();
-                    explosionAnimator.render(ships.get(i).getX() , ships.get(i).getY());
+                    explosionAnimator.render(ship.getX(), ship.getY());
                     colided = true;
                 }
+            }
         }
+
         return colided;
     }
 

@@ -93,4 +93,8 @@ public class Animator {
     public void setHeight(int height) {
         this.height = height;
     }
+
+    public String getPath() {
+        return path;
+    }
 }

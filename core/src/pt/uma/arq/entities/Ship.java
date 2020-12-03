@@ -1,5 +1,7 @@
 package pt.uma.arq.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import pt.uma.arq.game.Animator;
 
 import java.awt.*;
@@ -12,12 +14,14 @@ public abstract class Ship {
     protected Rectangle boundingBox;
     protected int x;
     protected int y;
+    protected Texture walkSheet;
 
     public Ship() {
         animator = new Animator();
         attackValue = 0;
         collided = false;
         boundingBox = new Rectangle();
+        walkSheet = new Texture("");
     }
 
     public Ship(Animator animator, int x, int y, int attackValue, boolean collided, Rectangle boundingBox) {
@@ -26,7 +30,8 @@ public abstract class Ship {
         this.y = y;
         this.attackValue = attackValue;
         this.collided = collided;
-        this.boundingBox = boundingBox;
+        this.walkSheet = new Texture(Gdx.files.internal(animator.getPath()));
+        this.boundingBox = new Rectangle(x,y,walkSheet.getWidth(),walkSheet.getHeight());
     }
 
     public void create() {
@@ -37,23 +42,19 @@ public abstract class Ship {
         animator.render(x, y);
     }
 
-    public Animator getAnimator() {
-        return animator;
-    }
 
     public int getX() {
         return x;
     }
 
-    public int getY() {
-        return y;
+    public int getY() {return y;}
+
+    public int getBoundingBoxWidth(){
+        return walkSheet.getWidth();
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public int getBoundingBoxHeight(){
+        return walkSheet.getHeight();
     }
 
-    public void dispose(){
-        animator.dispose();
-    }
 }
