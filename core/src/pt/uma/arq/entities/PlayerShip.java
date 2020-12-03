@@ -34,13 +34,13 @@ public class PlayerShip extends Ship {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && laserTimer >= playerLaserTime) {
             fire();
-            LaserManagement.remove();
             laserTimer = 0;
         }
     }
 
     public void fire() {
-        LaserManagement.add(new Laser(batch, getX(), getY()));
+        LaserManagement.add(new Laser(batch, getX(), getY())
+        );
     }
 
     public void update(){

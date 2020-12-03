@@ -38,15 +38,13 @@ public class Game extends ApplicationAdapter {
 
         backgroundManagement = new BackgroundManagement(batch);
 
-
         fleet = new Fleet();
-
         player = new PlayerShip(batch);
-
         player.create();
 
-        fleet.fillShips();
+        fleet.fillShips(batch);
         fleet.createFleet();
+
     }
 
     @Override
@@ -57,13 +55,22 @@ public class Game extends ApplicationAdapter {
 
         batch.begin();
         backgroundManagement.render();
+
         player.render();
-        fleet.render();
         player.handleInput();
         player.update();
+        fleet.render();
+
         LaserManagement.render();
+        LaserManagement.remove();
+        LaserManagement.updateShipPosition(fleet.getShips());
+
+        if(fleet.getShips().size() == 0){
+            font.draw(batch, "Player Wins", 220, 420);
+        }
 
         batch.end();
+
 
     }
 

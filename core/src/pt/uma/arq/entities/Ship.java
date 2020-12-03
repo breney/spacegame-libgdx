@@ -53,7 +53,7 @@ public abstract class Ship {
         this.x = x;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void dispose(){
+        animator.dispose();
     }
 }
