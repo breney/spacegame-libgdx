@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import jdk.internal.access.JavaIOFileDescriptorAccess;
-import jdk.internal.icu.util.CodePointTrie;
+
 import org.w3c.dom.Text;
 import pt.uma.arq.entities.LargeShip;
 import pt.uma.arq.entities.MediumShip;

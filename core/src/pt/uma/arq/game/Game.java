@@ -45,6 +45,7 @@ public class Game extends ApplicationAdapter {
 
         score.create();
         life.create();
+
     }
 
     @Override

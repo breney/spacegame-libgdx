@@ -45,6 +45,7 @@ public class LaserManagement {
             laser.render();
         }
     }
+
     //função para atualizar cordenadas das naves enimigas
     public static void updateEnemyShipPosition(ArrayList<Ship> ships) {
         ship = ships;

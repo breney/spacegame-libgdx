@@ -70,7 +70,7 @@ public class Laser {
 
         while (it.hasNext()) {
             Ship ship = it.next();
-            if (boundingbox.intersects(ship.getBoundingBox())) {
+            if (boundingbox.intersects(ship.getBoundingBox()) ) {
                 it.remove();
                 player.setScore(player.getScore() + ship.getAttackValue());
                 explosionAnimator.create();
@@ -83,8 +83,9 @@ public class Laser {
 
     //função para verficar a colidez do laser do naves para o player
     public boolean isColidedPlayerShip(PlayerShip player) {
-        if (boundingbox.intersects(player.getBoundingBox())) {
+        if (boundingbox.intersects(player.getBoundingBox()) && removable) {
             player.setLife(player.getLife() - damage);
+            System.out.println("bala");
         }
         return colided;
     }
