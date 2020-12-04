@@ -6,15 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import pt.uma.arq.entities.LargeShip;
-import pt.uma.arq.entities.MediumShip;
 import pt.uma.arq.entities.PlayerShip;
-import pt.uma.arq.entities.SmallShip;
-import pt.uma.arq.game.Fleet;
-
-import java.awt.*;
 
 public class Game extends ApplicationAdapter {
+
     private SpriteBatch batch;
 
     private BackgroundManagement backgroundManagement;
@@ -23,13 +18,16 @@ public class Game extends ApplicationAdapter {
     private PlayerShip player;
     private Fleet fleet;
 
+    private Animator score;
+    private Animator life;
 
     @Override
     public void create() {
+
         Gdx.graphics.setWindowedMode(600, 800);
 
-
         batch = new SpriteBatch();
+
         font = new BitmapFont(Gdx.files.internal("gamefont.fnt"),
                 Gdx.files.internal("gamefont.png"), false);
 
@@ -37,11 +35,16 @@ public class Game extends ApplicationAdapter {
 
         fleet = new Fleet(batch);
         player = new PlayerShip(batch);
+        score = new Animator(batch,"score.png",1,1);
+        life = new Animator(batch,"hearth.png",1,1);
+
         player.create();
 
         fleet.fillShips(batch);
         fleet.createFleet();
 
+        score.create();
+        life.create();
     }
 
     @Override
@@ -53,21 +56,21 @@ public class Game extends ApplicationAdapter {
         batch.begin();
 
         backgroundManagement.render();
-        font.draw(batch, "Score : " + player.getScore(), 20, 780);
-        font.draw(batch, "HP : " + player.getLife(), 480, 780);
 
-        if(player.getLife() >= 0){
+        score.render(20,760);
+        font.draw(batch, "" + player.getScore(), 90, 780);
+        life.render(490, 760);
+        font.draw(batch, "" + player.getLife(), 530, 780);
+
+        if(player.getLife() > 0){
             player.render();
             player.handleInput();
             player.update();
-        }
-
-        if(fleet.getShips().size() != 0){
-            fleet.render();
             fleet.shipsFire();
-            fleet.update();
         }
 
+        fleet.render();
+        fleet.update();
 
         LaserManagement.render();
         LaserManagement.remove();
@@ -78,14 +81,13 @@ public class Game extends ApplicationAdapter {
             font.draw(batch, "Player Wins", 220, 420);
         }
         if(player.getLife() <= 0){
-            font.draw(batch, "Enemy Crew Wins", 220, 420);
+            font.draw(batch, "Enemy Crew Wins", 180, 420);
+            player.setLife(0);
         }
 
         batch.end();
 
-
     }
-
 
     @Override
     public void dispose() {

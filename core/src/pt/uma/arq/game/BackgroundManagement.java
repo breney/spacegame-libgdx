@@ -1,10 +1,12 @@
 package pt.uma.arq.game;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class BackgroundManagement {
+public class BackgroundManagement  {
 
     private Texture background;
     private Sprite sprite;
@@ -20,5 +22,6 @@ public class BackgroundManagement {
     public void render() {
         sprite.draw(spriteBatch);
     }
+
 
 }

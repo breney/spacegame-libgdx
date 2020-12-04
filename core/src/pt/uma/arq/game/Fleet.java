@@ -16,18 +16,20 @@ import java.lang.Math;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Fleet {
 
-
     private ArrayList<Ship> ships;
-
-    private float laserTimer = 0;
-
-    private float shipsLaserTime = 0;
 
     private SpriteBatch batch;
 
+    private float laserTimer;
+
+    private float shipsLaserTime;
+
+    //construtor
     public Fleet(SpriteBatch batch) {
         this.ships = new ArrayList<>();
         this.batch = batch;
@@ -35,58 +37,52 @@ public class Fleet {
         this.shipsLaserTime = 2f;
     }
 
-    public ArrayList<Ship> getShips() {
-        return ships;
-    }
-
+    //funções para adicionar naves ao array
     public void fillShips(SpriteBatch batch) {
 
-        for (int i = 0; i < 3; i++) {
-            ships.add(new SmallShip(batch, (200 + 70 * i), 500));
+        for (int i = 0; i < 8; i++) {
+            ships.add(new SmallShip(batch, (30 + 70 * i), 500));
         }
-        for (int j = 0; j < 4; j++) {
-            ships.add(new MediumShip(batch, (150 + 70 * j), 550));
+        for (int j = 0; j < 8; j++) {
+            ships.add(new MediumShip(batch, (20 + 70 * j), 550));
         }
-        for (int k = 0; k < 6; k++) {
-            ships.add(new LargeShip(batch, (100 + 70 * k), 600));
+        for (int k = 0; k < 8; k++) {
+            ships.add(new LargeShip(batch, (20 + 70 * k), 600));
         }
     }
 
+    //função para criar naves
     public void createFleet() {
         for (int i = 0; i < ships.size(); i++) {
             ships.get(i).create();
         }
     }
 
+    //função para renderizar naves
     public void render() {
         for (int j = 0; j < ships.size(); j++) {
             ships.get(j).render();
         }
     }
 
+    //função para adicionar lasers ao arrayLasers de forma aleatoria
     public void shipsFire() {
 
         double random = Math.random() * ships.size();
-        int damage = 0;
-
-        if(ships.get((int) random).getName() == "largeship"){
-            damage = 20;
-        }else if (ships.get((int) random).getName() == "mediumship"){
-            damage = 10;
-        }else{
-            damage = 5;
-        }
 
         if (laserTimer >= shipsLaserTime && ships.size() != 0) {
-            LaserManagement.add(new Laser(batch, ships.get((int) random).getX(), ships.get((int) random).getY(), false, damage));
+            LaserManagement.add(new Laser(batch, ships.get((int) random).getX(), ships.get((int) random).getY(), false, ships.get((int) random).getAttackValue()));
             laserTimer = 0;
         }
-
     }
 
+    //update timer
     public void update() {
         laserTimer += Gdx.graphics.getDeltaTime();
     }
 
-
+    //getter
+    public ArrayList<Ship> getShips() {
+        return ships;
+    }
 }

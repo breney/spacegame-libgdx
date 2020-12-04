@@ -73,27 +73,6 @@ public class Animator {
         spriteBatch.draw(currentFrame, posX, posY); // Draw current frame at (50, 50)
     }
 
-
-    public void dispose() { // SpriteBatches and Textures must always be disposed
-        walkSheet.dispose();
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public String getPath() {
         return path;
     }

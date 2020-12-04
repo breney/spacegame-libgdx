@@ -25,7 +25,7 @@ public abstract class Ship {
         boundingBox = new Rectangle();
         walkSheet = new Texture("");
     }
-
+    //Construtor da classe
     public Ship(Animator animator, int x, int y, int attackValue, boolean collided, String name) {
         this.animator = animator;
         this.x = x;
@@ -37,15 +37,18 @@ public abstract class Ship {
         this.name = name;
     }
 
+    //Create do animator
     public void create() {
         animator.create();
     }
 
+    //render do animator
     public void render() {
         animator.render(x, y);
         boundingBox.setLocation(x,y);
     }
 
+    //gets
     public int getX() {
         return x;
     }
@@ -56,8 +59,8 @@ public abstract class Ship {
         return boundingBox;
     }
 
-    public String getName(){
-        return name;
+    public int getAttackValue(){
+        return attackValue;
     }
 
 }
